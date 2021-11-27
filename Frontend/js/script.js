@@ -1,4 +1,5 @@
 import { io } from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js';
+import { PORT, URL } from './const.js';
 import {
   airspeed,
   altimeter,
@@ -7,6 +8,8 @@ import {
   turn_coordinator,
   variometer,
 } from './flightVars.js';
+
+const socket = io(`${URL}:${PORT}`);
 
 var increment = 0;
 setInterval(function () {
