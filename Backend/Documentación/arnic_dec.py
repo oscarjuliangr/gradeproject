@@ -1,59 +1,49 @@
-#import serial
-#puerto = "COM1" # tipico en windows X= un entero positivo
-#baudrate = 57600 #(o el baudrate adecuado/usado en putty)
-#ser = serial.Serial(port=puerto, baudrate=baudrate)
-#respuesta_bytes = ser.read(11) # si sabes la cantidad de bytes recibidos, puedes especificarlo dentro de los parentesis.
-# Transforma los bytes en string
-#respuesta_string = respuesta_bytes.decode('utf-8')
-#print(respuesta_string)
-
-################# # trama a analizar: 3764437204
-
-
-respuesta_string = int('3764437204')
-if len(str(respuesta_string)) != 10:
-    print("Error de digito")
-    LB = 0
-else:
-    r_bin2 = str(bin(respuesta_string))
-    r_bin = r_bin2[2:34]
-    print("Cadena binaria: ")
-    print(r_bin)
-    if len(r_bin) == 31:
-        r_bin = "0" + r_bin
+def arn_dec(respuesta_string):
+    if len(respuesta_string) != 10:
+        LB = 0
+    else:
+        r_bin2 = str(bin(int(respuesta_string)))
+        r_bin = r_bin2[2:34]
+        print("Cadena binaria: ")
+        print(r_bin)
+        if len(r_bin) == 31:
+            r_bin = "0" + r_bin
+        P = r_bin[0]
+        SSM = r_bin[0:2]
+        DATA = r_bin[3:22]
+        SDI = r_bin[22:24]
+        LABEL = r_bin[24:32]        
+        LB = int(str(int(LABEL[0:2],2)) + str(int(LABEL[3:5],2)) + str(int(LABEL[5:8],2)))    
+        print("Label: ",LB)
+        #LB = 310
+        switch(LB,DATA)
         
-    P = r_bin[0]
-    SSM = r_bin[0:2]
-    DATA = r_bin[3:22]
-    SDI = r_bin[22:24]
-    LABEL = r_bin[24:32]        
-    LB = int(str(int(LABEL[0:2],2)) + str(int(LABEL[3:5],2)) + str(int(LABEL[5:8],2)))    
-
-    def invertir_numero(n):
+def invertir_numero(n):
         numero = 0
         while n != 0:
             numero = 10*numero+n % 10
             n //= 10
         return numero
-    print("Label: ")
-    LB = 231
-    print(LB)
 
-
-def switch():        
+def switch(LB,DATA):        
 
     def Magnetic_Heading(): #14
         ## proceso
 
         print("Magnetic Heading Data: ")
-        p = int(DATA,2)
-        print(p)
-        p1 = len(DATA)
-        print(p1)
+        #DATA = '000001001010001'
+        D1 = str(int(DATA[0:3],2))
+        D2 = str(int(DATA[3:7],2))
+        D3 = str(int(DATA[7:11],2))                
+        D4 = str(int(DATA[11:15],2))                
+        DATAA = float(D1+D2+D3+'.'+D4)
+        DATAA1 = str(DATAA)+' Deg'        
+        print(DATAA1)  
         
     def Magnetic_Heading2(): #320
         ## proceso
         print("Magnetic Heading Data: ")
+
             
     def Pitch_angle(): #324
         ## proceso
@@ -130,13 +120,13 @@ def switch():
             print("Desending")
         else:
             print("No data")
-        return fts,data
+        print(fts)
 
     def Baro_Corrected(): #204
         ## proceso
         print("Baro Corrected Data: ") 
 
-    def Mach(): #205
+    def Mach(): #205 
         ## proceso
         print("Mach Data: ") 
 
@@ -187,7 +177,7 @@ def switch():
     def Total_Air_Temp(): #231
         ## proceso
         print("Total Air Temp Data: ") 
-        DATA = '00000100101'
+        #DATA = '00000100101'
         D1 = str(int(DATA[0:3],2))
         D2 = str(int(DATA[3:7],2))
         D3 = str(int(DATA[7:11],2))                
@@ -198,6 +188,13 @@ def switch():
     def Static_Air_Temp(): #233
         ## proceso
         print("Static Air Temp Data: ") 
+        DATA = '00000010011'
+        D1 = str(int(DATA[0:3],2))
+        D2 = str(int(DATA[3:7],2))
+        D3 = str(int(DATA[7:11],2))                
+        DATAA = float(D1+D2+D3)
+        DATAA1 = str(DATAA)+' Dec. C'        
+        print(DATAA1)          
 
     def Corrected_Angle_of_Attack(): #241
         ## proceso
@@ -235,7 +232,7 @@ def switch():
     def Ground_Speed(): #12
         ## proceso
         print("Ground Speed Data: ") 
-        DATA = '00001100101000'
+        #DATA = '00001100101000'
         D1 = str(int(DATA[0:3],2))
         D2 = str(int(DATA[3:7],2))
         D3 = str(int(DATA[7:11],2))        
@@ -248,17 +245,34 @@ def switch():
         ## proceso
         print("Selected Course Data: ") 
 
-    def Desired_Track(): #114
+    def Desired_Track(): #114 REVISAR
         ## proceso
         print("Desired Track Data: ") 
+        """DATA = '100001110010'
+        #D1 = str(int(DATA[0:12],2))        
+        #print(D1+'Deg')
+        D1 = str(int(DATA[0:3],2))
+        D2 = str(int(DATA[3:7],2))
+        D3 = str(int(DATA[7:11],2))                
+        DATAA = float(D1+D2+D3)
+        DATAA1 = str(DATAA)+' Deg'        
+        print(DATAA1)         """
+
+
 
     def Cross_Track(): #116
         ## proceso
         print("Cross Track Data: ") 
+        #DATA = '011001100000000'
+        D1 = str(int(DATA[0:15],2)*0.004)        
+        print(D1+'N.M')        
 
     def Horizontal_Command_Signal(): #121
         ## proceso
         print("Horizontal Command Signal Data: ")       
+        DATA = '011001100000000'
+        D1 = str(int(DATA[0:14],2)*0.01)        
+        print(D1+' Deg')          
 
     def Universal_Time_Coordinate(): #125
         ## proceso
@@ -276,6 +290,9 @@ def switch():
     def Distance_to_go(): #251
         ## proceso
         print("Distance to go Data: ")    
+        DATA = '011001100000000'
+        D1 = str(int(DATA[0:15],2)*0.125)        
+        print(D1+' N.M')         
 
     def Time_to_go(): #252
         ## proceso
@@ -283,7 +300,10 @@ def switch():
 
     def Present_Position_Latitude(): #310
         ## proceso
-        print("Present Position Latitude Data: ")    
+        print("Present Position Latitude Data: ")
+        DATA = '011100111110101010'
+        D1 = str(int(DATA,2)*0.000172)        
+        print('N '+D1+' Deg')             
 
     def Present_Position_Longitude(): #311
         ## proceso
@@ -310,7 +330,7 @@ def switch():
         print("Drift Angle Data: ")                                                                                     
 
     def default():    
-        print("LABEL no encontrado")
+        pass
 
     dict = {
         14  : Magnetic_Heading, #OK
@@ -342,7 +362,7 @@ def switch():
         220 : Baro_corrected_altitude, 
         230 : True_Airspeed2, #OK
         231 : Total_Air_Temp, #OK
-        233 : Static_Air_Temp,
+        233 : Static_Air_Temp, #OK
         241 : Corrected_Angle_of_Attack,
         242 : Total_Pressure,
         1   : Distance_to_go_Data, #OK
@@ -366,7 +386,5 @@ def switch():
 
     }
     dict.get(LB,default)()
-switch()
-
 
 
