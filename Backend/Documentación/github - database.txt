@@ -1,0 +1,9 @@
+1. on escuchar
+emit escribir
+
+git add .
+git commit -m "mensaje"
+git push %para enviarlos
+git pull % para traerlos
+
+NO DEBE NECESITAR INTERNET
