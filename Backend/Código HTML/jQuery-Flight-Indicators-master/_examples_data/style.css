@@ -1,0 +1,50 @@
+body {
+  background-color: #fafafa;
+  font-family: sans-serif;
+  color: #333;
+  border-top: 20px solid #efecea;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+.container .examples{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+.container .examples div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+h1 {
+  font-size: 2.5em;
+}
+a {
+  color: #d72;
+}
+.examples {
+  text-align: center;
+}
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background-color: #efecea;
+}
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+  background-color: transparent;
+}
+footer {
+  text-align: center;
+  background-color: #efecea;
+  padding: 10px;
+  color: #666;
+}
