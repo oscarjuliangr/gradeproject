@@ -1,11 +1,13 @@
+vaa=" "
 def arn_dec(respuesta_string):
+    global vaa
     if len(respuesta_string) != 10:
         LB = 0
     else:
         r_bin2 = str(bin(int(respuesta_string)))
         r_bin = r_bin2[2:34]
-        print("Cadena binaria: ")
-        print(r_bin)
+        #.print("Cadena binaria: ")
+        #.print(r_bin)
         if len(r_bin) == 31:
             r_bin = "0" + r_bin
         P = r_bin[0]
@@ -14,9 +16,10 @@ def arn_dec(respuesta_string):
         SDI = r_bin[22:24]
         LABEL = r_bin[24:32]        
         LB = int(str(int(LABEL[0:2],2)) + str(int(LABEL[3:5],2)) + str(int(LABEL[5:8],2)))    
-        print("Label: ",LB)
-        #LB = 310
+        #.print("Label: ",LB)
         switch(LB,DATA)
+        return(LB,vaa)
+        
         
 def invertir_numero(n):
         numero = 0
@@ -29,85 +32,113 @@ def switch(LB,DATA):
 
     def Magnetic_Heading(): #14
         ## proceso
-
+        global vaa
         print("Magnetic Heading Data: ")
-        #DATA = '000001001010001'
-        D1 = str(int(DATA[0:3],2))
-        D2 = str(int(DATA[3:7],2))
-        D3 = str(int(DATA[7:11],2))                
-        D4 = str(int(DATA[11:15],2))                
-        DATAA = float(D1+D2+D3+'.'+D4)
-        DATAA1 = str(DATAA)+' Deg'        
-        print(DATAA1)  
+        p = int(DATA,2)
+        #.print(p)
+        p1 = len(DATA)
+        #.print(p1)
+        vaa=str(p)
         
+    
     def Magnetic_Heading2(): #320
         ## proceso
+        global vaa
         print("Magnetic Heading Data: ")
-
+        vaa='no_data'
             
     def Pitch_angle(): #324
         ## proceso
+        global vaa
         print("Pitch Angle Data: ")
-        print(int(DATA))
+        #.print(int(DATA))
         pdata = int(str(invertir_numero(int(DATA))),2)
-        print(pdata)
+        #.print(pdata)
+        vaa=str(pdata)
 
     def Roll_Angle(): #325
         ## proceso
+        global vaa
         print("Roll Angle Data: ")
+        vaa="no_data"
 
     def Body_Pitch_Rate(): #326
         ## proceso
+        global vaa
         print("Body Pitch Rate Data: ")
+        vaa="no_data"
 
     def Body_Roll_Rate(): # 327
         ## proceso
+        global vaa
         print("Body Roll Rate Data: ")
+        vaa="no_data"
 
     def Body_Yaw_Rate(): # 330
         ## proceso
+        global vaa
         print("Body Yaw Rate Data: ")
+        vaa="no_data"
 
     def Body_Longitudinal_Acceleration(): #331
         ## proceso
-        print("Body Longitudinal Acceleration Data: ")                                
+        global vaa
+        print("Body Longitudinal Acceleration Data: ")
+        vaa="no_data"
 
     def Body_Lateral_Acceleration(): #332
         ## proceso
-        print("Body Lateral Acceleration Data: ")  
+        global vaa
+        print("Body Lateral Acceleration Data: ")
+        vaa="no_data"
 
     def Body_Normal_Acceleration(): #333
         ## proceso
-        print("Body Normal Acceleration Data: ")    
+        global vaa
+        print("Body Normal Acceleration Data: ")
+        vaa="no_data"
 
     def Inertial_Pitch_Rate(): #336
         ## proceso
-        print("Inertial Pitch Rate Data: ")    
+        global vaa
+        print("Inertial Pitch Rate Data: ")
+        vaa="no_data"
 
     def Inertial_Roll_Rate(): #337
         ## proceso
-        print("Inertial Roll Rate Data: ")    
+        global vaa
+        print("Inertial Roll Rate Data: ")
+        vaa="no_data"
 
     def Inertial_Yaw_Rate(): #340
         ## proceso
-        print("Inertial Yaw Rate Data: ")    
+        global vaa
+        print("Inertial Yaw Rate Data: ")
+        vaa="no_data"
 
     def Vertical_Acceleration(): #364
         ## proceso
-        print("Vertical Acceleration Data: ")    
+        global vaa
+        print("Vertical Acceleration Data: ")
+        vaa="no_data"
 
     def Along_Heading_Acceleration(): #375
         ## proceso
-        print("Along Heading Acceleration Data: ")    
+        global vaa
+        print("Along Heading Acceleration Data: ")
+        vaa="no_data"
 
     def Cross_Heading_Acceleration(): #376
         ## proceso
-        print("Cross Heading Acceleration Data: ")    
+        global vaa
+        print("Cross Heading Acceleration Data: ")
+        vaa="no_data"
 
     def Altitude(): #203
-        ## proceso        
+        ## proceso
+        global vaa
         print("Altitude Data: ")                                            
-        print(DATA)
+        #.print(DATA)
         # data = DATA[0:6]
         data = "0011001"
         fts = str(int(data,2)*100) + " fts" 
@@ -120,51 +151,73 @@ def switch(LB,DATA):
             print("Desending")
         else:
             print("No data")
-        print(fts)
+        #.print(fts)
+        vaa=fts
 
     def Baro_Corrected(): #204
         ## proceso
-        print("Baro Corrected Data: ") 
+        global vaa
+        print("Baro Corrected Data: ")
+        vaa="no_data"
 
-    def Mach(): #205 
+    def Mach(): #205
         ## proceso
-        print("Mach Data: ") 
+        global vaa
+        print("Mach Data: ")
+        vaa="no_data"
 
     def Computed_Airspeed(): #206
         ## proceso
-        print("Computed Airspeed Data: ") 
+        global vaa
+        print("Computed Airspeed Data: ")
+        vaa="no_data"
 
     def Max_Allowable_Airspeed(): #207
         ## proceso
-        print("Max. Allowable Airspeed Data: ") 
+        global vaa
+        print("Max. Allowable Airspeed Data: ")
+        vaa="no_data"
 
     def True_Airspeed(): #210
         ## proceso
-        print("True Airspeed Data: ") 
+        global vaa
+        print("True Airspeed Data: ")
+        vaa="no_data"
                                             
     def Total_Air_Temp(): #211
         ## proceso
-        print("Total Air Temp Data: ") 
+        global vaa
+        print("Total Air Temp Data: ")
+        vaa="no_data"
 
     def Altitude_Rate(): #212
         ## proceso
-        print("Altitude Rate Data: ") 
+        global vaa
+        print("Altitude Rate Data: ")
+        vaa="no_data"
 
     def Impacted_Pressure(): #215
         ## proceso
-        print("Impacted Pressure Data: ") 
+        global vaa
+        print("Impacted Pressure Data: ")
+        vaa="no_data"
 
     def Static_Pressure(): #217
         ## proceso
-        print("Static Pressure Data: ") 
+        global vaa
+        print("Static Pressure Data: ")
+        vaa="no_data"
 
     def Baro_corrected_altitude(): #220
         ## proceso
-        print("Baro corrected altitude Data: ") 
+        global vaa
+        print("Baro corrected altitude Data: ")
+        vaa="no_data"
         
 
     def True_Airspeed2(): #230
         ## proceso
+        global vaa
         print("True Airspeed 2 Data: ")      
         #DATA = '10101100101'
         D1 = str(int(DATA[0:3],2))
@@ -172,40 +225,43 @@ def switch(LB,DATA):
         D3 = str(int(DATA[7:11],2))                
         DATAA = float(D1+D2+D3)
         DATAA1 = str(DATAA)+' Knots'        
-        print(DATAA1)                                           
+        print(DATAA1)
+        vaa=DATAA1
 
     def Total_Air_Temp(): #231
         ## proceso
+        global vaa
         print("Total Air Temp Data: ") 
-        #DATA = '00000100101'
+        DATA = '00000100101'
         D1 = str(int(DATA[0:3],2))
         D2 = str(int(DATA[3:7],2))
         D3 = str(int(DATA[7:11],2))                
         DATAA = float(D1+D2+D3)
         DATAA1 = str(DATAA)+' Dec. C'        
-        print(DATAA1)          
+        print(DATAA1)
+        vaa=DATAA1
 
     def Static_Air_Temp(): #233
         ## proceso
-        print("Static Air Temp Data: ") 
-        DATA = '00000010011'
-        D1 = str(int(DATA[0:3],2))
-        D2 = str(int(DATA[3:7],2))
-        D3 = str(int(DATA[7:11],2))                
-        DATAA = float(D1+D2+D3)
-        DATAA1 = str(DATAA)+' Dec. C'        
-        print(DATAA1)          
+        global vaa
+        print("Static Air Temp Data: ")
+        vaa="no_data"
 
     def Corrected_Angle_of_Attack(): #241
         ## proceso
-        print("Corrected Angle of AttackData: ") 
+        global vaa
+        print("Corrected Angle of AttackData: ")
+        vaa="no_data"
 
     def Total_Pressure(): #242
         ## proceso
-        print("Total Pressure Data: ") 
+        global vaa
+        print("Total Pressure Data: ")
+        vaa="no_data"
 
     def Distance_to_go_Data(): #1
-        ## proceso        
+        ## proceso
+        global vaa
         print("Distance to go Data: ") 
         #DATA = '0100111010100000100'
         D1 = str(int(DATA[0:3],2))    
@@ -215,10 +271,11 @@ def switch(LB,DATA):
         D5 = str(int(DATA[15:19],2))        
         DATAA = float(D1+D2+D3+D4+'.'+D5)
         DATAA1 = str(DATAA)+' NM'        
-        print(DATAA1)
-        
+        #.print(DATAA1)
+        vaa=DATAA1
     def Time_to_go_Data(): #2
         ## proceso
+        global vaa
         print("Time to go Data: ") 
         #DATA = '001010001010011'
         D1 = str(int(DATA[0:3],2))
@@ -227,55 +284,50 @@ def switch(LB,DATA):
         D4 = str(int(DATA[11:15],2))
         DATAA = float(D1+D2+D3+'.'+D4)
         DATAA1 = str(DATAA)+' Min'        
-        print(DATAA1)
+        #.print(DATAA1)
+        vaa=DATAA1
 
     def Ground_Speed(): #12
         ## proceso
+        global vaa
         print("Ground Speed Data: ") 
-        #DATA = '00001100101000'
+        DATA = '00001100101000'
         D1 = str(int(DATA[0:3],2))
         D2 = str(int(DATA[3:7],2))
         D3 = str(int(DATA[7:11],2))        
         D4 = str(int(DATA[11:15],2))
         DATAA = float(D1+D2+D3+D4)
         DATAA1 = str(DATAA)+' Knots'        
-        print(DATAA1)        
+        #.print(DATAA1)
+        vaa=DATAA1
 
     def Selected_Course(): #100
         ## proceso
-        print("Selected Course Data: ") 
+        global vaa
+        print("Selected Course Data: ")
+        vaa="no_data"
 
-    def Desired_Track(): #114 REVISAR
+    def Desired_Track(): #114
         ## proceso
-        print("Desired Track Data: ") 
-        """DATA = '100001110010'
-        #D1 = str(int(DATA[0:12],2))        
-        #print(D1+'Deg')
-        D1 = str(int(DATA[0:3],2))
-        D2 = str(int(DATA[3:7],2))
-        D3 = str(int(DATA[7:11],2))                
-        DATAA = float(D1+D2+D3)
-        DATAA1 = str(DATAA)+' Deg'        
-        print(DATAA1)         """
-
-
+        global vaa
+        print("Desired Track Data: ")
+        vaa="no_data"
 
     def Cross_Track(): #116
         ## proceso
-        print("Cross Track Data: ") 
-        #DATA = '011001100000000'
-        D1 = str(int(DATA[0:15],2)*0.004)        
-        print(D1+'N.M')        
+        global vaa
+        print("Cross Track Data: ")
+        vaa="no_data"
 
     def Horizontal_Command_Signal(): #121
         ## proceso
-        print("Horizontal Command Signal Data: ")       
-        DATA = '011001100000000'
-        D1 = str(int(DATA[0:14],2)*0.01)        
-        print(D1+' Deg')          
+        global vaa
+        print("Horizontal Command Signal Data: ")
+        vaa="no_data"
 
     def Universal_Time_Coordinate(): #125
         ## proceso
+        global vaa
         print("Universal Time Coordinate Data: ")    
         #DATA = '0010101010001010101'
         D1 = str(int(DATA[0:3],2))    
@@ -285,51 +337,66 @@ def switch(LB,DATA):
         D5 = str(int(DATA[15:19],2))        
         DATAA = float(D1+D2+D3+D4+'.'+D5)
         DATAA1 = str(DATAA)+' Hr'        
-        print(DATAA1)      
+        #.print(DATAA1)
+        vaa=DATAA1
 
     def Distance_to_go(): #251
         ## proceso
-        print("Distance to go Data: ")    
-        DATA = '011001100000000'
-        D1 = str(int(DATA[0:15],2)*0.125)        
-        print(D1+' N.M')         
+        global vaa
+        print("Distance to go Data: ")
+        vaa="no_data"
 
     def Time_to_go(): #252
         ## proceso
-        print("Time to go Data: ")    
+        global vaa
+        print("Time to go Data: ")
+        vaa="no_data"
 
     def Present_Position_Latitude(): #310
         ## proceso
+        global vaa
         print("Present Position Latitude Data: ")
-        DATA = '011100111110101010'
-        D1 = str(int(DATA,2)*0.000172)        
-        print('N '+D1+' Deg')             
+        vaa="no_data"
 
     def Present_Position_Longitude(): #311
         ## proceso
-        print("Present Position Longitude Data: ")    
+        global vaa
+        print("Present Position Longitude Data: ")
+        vaa="no_data"
 
     def Selected_Course(): #312
         ## proceso
-        print("Ground Speed Data: ")    
+        global vaa
+        print("Ground Speed Data: ")
+        vaa="no_data"
 
     def Track_Angle_True(): #313
         ## proceso
-        print("Track Angle - True Data: ")   
+        global vaa
+        print("Track Angle - True Data: ")
+        vaa="no_data"
 
     def Wind_Speed(): #315
         ## proceso
-        print("Wind Speed Data: ")   
+        global vaa
+        print("Wind Speed Data: ")
+        vaa="no_data"
 
     def Wind_Direction_True(): #316
         ## proceso
-        print("Wind Direction Data: ")   
+        global vaa
+        print("Wind Direction Data: ")
+        vaa="no_data"
 
     def Drift_Angle(): #321
         ## proceso
-        print("Drift Angle Data: ")                                                                                     
+        global vaa
+        print("Drift Angle Data: ")
+        vaa="no_data"
 
-    def default():    
+    def default():
+        global vaa
+        vaa="no_data"
         pass
 
     dict = {
@@ -362,7 +429,7 @@ def switch(LB,DATA):
         220 : Baro_corrected_altitude, 
         230 : True_Airspeed2, #OK
         231 : Total_Air_Temp, #OK
-        233 : Static_Air_Temp, #OK
+        233 : Static_Air_Temp,
         241 : Corrected_Angle_of_Attack,
         242 : Total_Pressure,
         1   : Distance_to_go_Data, #OK
@@ -386,5 +453,6 @@ def switch(LB,DATA):
 
     }
     dict.get(LB,default)()
+    
 
 
