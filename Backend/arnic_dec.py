@@ -1,7 +1,7 @@
 vaa=" "
 dato = " "
 def arn_dec(respuesta_string):
-    global vaa, dato
+    global vaa, dato, SSM
     if len(respuesta_string) != 10:
         LB = 0
     else:
@@ -16,8 +16,14 @@ def arn_dec(respuesta_string):
         LABEL = r_bin[24:32]        
         LB = int(str(int(LABEL[0:2],2)) + str(int(LABEL[3:5],2)) + str(int(LABEL[5:8],2)))    
         #.print("Label: ",LB)
+        
+        # test 
+        LB = 104        
+
         switch(LB,DATA)
         print(dato)
+        print(vaa)        
+
         return(LB,vaa)
         
         
@@ -41,14 +47,16 @@ def switch(LB,DATA):
         ## proceso
         global vaa, dato
         dato = "Roll Angle Data: "
-        vaa="no_data"
+        pdata = int(str(invertir_numero(int(DATA))),2)        
+        vaa=str(pdata)        
 
     def Altitude(): #203
         ## proceso
         global vaa, dato
         dato = "Altitude Data: "                                                   
-        data = "0011001"
-        fts = str(int(data,2)*100) + " fts" 
+        #data = "0011001"
+        DATA2 =  DATA[1:18]    #"00101001001000011"
+        fts = str(int(DATA2,2)) + " fts" 
         zsint = DATA[7:9]
         if zsint == "00":
             print("No Vertical Rate (Level Flight)")
@@ -60,20 +68,31 @@ def switch(LB,DATA):
             print("No data")        
         vaa=fts
 
-    def Computed_Airspeed(): #206
+    def Computed_Airspeed(): #206 
         ## proceso
-        global vaa, dato
-        dato = "Computed Airspeed Data: "
-        vaa="no_data"
+        # ejemplo 425 knots - 0110101001
+        #DATA = "0110101001"
+        global vaa, dato   
+        A1 = str(invertir_numero(int(DATA)))
+        DATA2 = str(invertir_numero(int(A1))) 
+        knots = str(int(DATA2,2)) + " knots"    
+        dato = "Computed Airspeed Data: "        
+        vaa=knots
 
     def True_Airspeed(): #210
         ## proceso
+        # ejemplo 565 knots - 01000110101000
         global vaa, dato
+        #DATA = "0100011010100000000"
+        A1 = str(invertir_numero(int(DATA)))
+        DATA2 = str(invertir_numero(int(A1)))
+        knots = str(int(DATA2,2)) + " knots"
         dato =  "True Airspeed Data: "
-        vaa="no_data"
+        vaa=knots
 
     def True_Airspeed2(): #230
-        ## proceso
+        ## proceso 
+        # ejemplo de dato: 
         global vaa, dato
         dato = "True Airspeed 2 Data: "     
         #DATA = '10101100101'
@@ -82,7 +101,7 @@ def switch(LB,DATA):
         D3 = str(int(DATA[7:11],2))                
         DATAA = float(D1+D2+D3)
         DATAA1 = str(DATAA)+' Knots'        
-        print(DATAA1)
+        #print(DATAA1)
         vaa=DATAA1
 
     def Total_Pressure(): #242
@@ -91,6 +110,30 @@ def switch(LB,DATA):
         dato = "Total Pressure Data: "
         vaa="no_data"
 
+    def Heading(): #314
+        ## proceso
+        global vaa, dato
+        dato = "Heading Data: "
+        vaa="no_data"
+
+    def Vertical_speed(): #104
+        ## proceso
+        global vaa, dato, SSM
+        DATA = "010001000000000"
+        dato = "Vertical speed Data: "
+        D1 = str(int(DATA[0:3],2))
+        D2 = str(int(DATA[3:7],2))
+        D3 = str(int(DATA[7:11],2))                
+        D4 = str(int(DATA[11:15],2))  
+        if SSM == "11":
+            DATAA = float("-"+D1+D2+D3+D4)
+        else:
+            DATAA = float(D1+D2+D3+D4)
+        DATAA1 = str(DATAA)+' Ft/Min'        
+        #print(DATAA1)
+        vaa=DATAA1        
+        
+
     def default():
         global vaa, dato
         vaa = "no_data"
@@ -98,15 +141,15 @@ def switch(LB,DATA):
         pass
 
     dict = {        
-        324 : Pitch_angle,
-        325 : Roll_Angle,
-        203 : Altitude,
-        206 : Computed_Airspeed,
-        210 : True_Airspeed,
-        230 : True_Airspeed2, #OK
-        242 : Total_Pressure,
-        #314 : Heading,
-        #360 : Vertical_speed,
+        324 : Pitch_angle, #1616969940         OK
+        325 : Roll_Angle, #3758670037          OK
+        203 : Altitude, #1611935875            OK
+        206 : Computed_Airspeed, #1610612870   OK
+        210 : True_Airspeed, #3758096520       OK
+        230 : True_Airspeed2, # OK             OK
+        242 : Total_Pressure,  # Hay muchas, 215,217, 255,257, preguntar
+        314 : Heading, # sin ejemplo para decodificar
+        104 : Vertical_speed, # OK - Probar, pues tiene las 2 formas de decodificación
     }
     dict.get(LB,default)()
     
