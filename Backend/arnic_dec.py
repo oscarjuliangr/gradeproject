@@ -90,7 +90,7 @@ def switch(LB,DATA):
         dato =  "True Airspeed Data: "
         vaa=knots
 
-    def True_Airspeed2(): #230
+    """def True_Airspeed2(): #230
         ## proceso 
         # ejemplo de dato: 
         global vaa, dato
@@ -102,19 +102,24 @@ def switch(LB,DATA):
         DATAA = float(D1+D2+D3)
         DATAA1 = str(DATAA)+' Knots'        
         #print(DATAA1)
-        vaa=DATAA1
+        vaa=DATAA1"""
 
-    def Total_Pressure(): #242
+    def Total_Pressure(): #217
         ## proceso
         global vaa, dato
         dato = "Total Pressure Data: "
-        vaa="no_data"
+        DATA2 =  DATA[1:18]    #"00101001001000011"
+        fts = str(int(DATA2,2)) + " Fts/min" 
+        vaa=fts
 
-    def Heading(): #314
+    def Heading(): #314 - 14 y el 320 # OK 320
         ## proceso
         global vaa, dato
         dato = "Heading Data: "
-        vaa="no_data"
+        A1 = str(invertir_numero(int(DATA)))
+        DATA2 = str(invertir_numero(int(A1)))
+        grades = str(int(DATA2,2)) + " °"        
+        vaa=grades
 
     def Vertical_speed(): #104
         ## proceso
@@ -145,10 +150,10 @@ def switch(LB,DATA):
         325 : Roll_Angle, #3758670037          OK
         203 : Altitude, #1611935875            OK
         206 : Computed_Airspeed, #1610612870   OK
-        210 : True_Airspeed, #3758096520       OK
-        230 : True_Airspeed2, # OK             OK
-        242 : Total_Pressure,  # Hay muchas, 215,217, 255,257, preguntar
-        314 : Heading, # sin ejemplo para decodificar
+        210 : True_Airspeed, #3758096520       OK -| USsAR ESTA
+        #230 : True_Airspeed2, # OK             OK
+        217 : Total_Pressure,  # OK ,217, 255,257, preguntar | USAR 217 por ahora
+        314 : Heading, # OK 320 - Probar ejemplos | %Magnetic % 14 y 320
         104 : Vertical_speed, # OK - Probar, pues tiene las 2 formas de decodificación
     }
     dict.get(LB,default)()
