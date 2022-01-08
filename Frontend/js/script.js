@@ -21,8 +21,8 @@ setInterval(function () {
   attitude.setPitch(50 * Math.sin(increment / 20));
 
   // Altimeter update
-  altimeter.setAltitude(10 * increment);
-  altimeter.setPressure(1000 + 3 * Math.sin(increment / 50));
+  altimeter.setAltitude(10 * increment); // variable 203
+  altimeter.setPressure(1000 + 3 * Math.sin(increment / 50)); // variable 217
 
   increment++;
 
