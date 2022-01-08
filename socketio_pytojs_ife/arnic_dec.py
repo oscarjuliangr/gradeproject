@@ -23,7 +23,7 @@ def arn_dec(respuesta_string):
         # test 
         switch(LB,DATA)
         #print(dato)
-        #print(vaa)        
+        print(vaa)        
         return(LB,vaa)
         
         
@@ -139,6 +139,13 @@ def switch(LB,DATA):
         DATAA1 = str(DATAA)+' Ft/Min'        
         #print(DATAA1)
         vaa=DATAA1        
+
+    def Hour():
+        global vaa, dato
+        dato = "Hour Data: "
+        DATA2 =  DATA[1:18]    #"00101001001000011"
+        hr = str(int(DATA2,2)) 
+        vaa=hr
         
 
     def default():
@@ -148,15 +155,22 @@ def switch(LB,DATA):
         pass
 
     dict = {        
-        324 : Pitch_angle, #1616969940         OK
+        210 : True_Airspeed, #3758096520       OK -| USsAR ESTA
         325 : Roll_Angle, #3758670037          OK
+        324 : Pitch_angle, #1616969940         OK        
         203 : Altitude, #1611935875            OK
         206 : Computed_Airspeed, #1610612870   OK
-        210 : True_Airspeed, #3758096520       OK -| USsAR ESTA
-        #230 : True_Airspeed2, # OK             OK
         217 : Total_Pressure,  # OK ,217, 255,257, preguntar | USAR 217 por ahora
-        314 : Heading, # OK 320 - Probar ejemplos | %Magnetic % 14 y 320
+        320 : Heading, # OK 320 - Probar ejemplos | %Magnetic % 14 y 320
         104 : Vertical_speed, # OK - Probar, pues tiene las 2 formas de decodificación
+        125 : Hour, 
+        #230 : True_Airspeed2, # OK             OK
+        
+        
+        
+#       125 : Hora ## falta  -- posición 
+
+
     }
     dict.get(LB,default)()
     

@@ -2,6 +2,9 @@ vaa=" "
 dato = " "
 def arn_dec(respuesta_string):
     global vaa, dato, SSM
+    if respuesta_string=='0':
+        return('no_data','no_data')
+    
     if len(respuesta_string) != 10:
         LB = 0
     else:
@@ -18,12 +21,9 @@ def arn_dec(respuesta_string):
         #.print("Label: ",LB)
         
         # test 
-        LB = 104        
-
         switch(LB,DATA)
-        print(dato)
+        #print(dato)
         print(vaa)        
-
         return(LB,vaa)
         
         
@@ -58,6 +58,7 @@ def switch(LB,DATA):
         DATA2 =  DATA[1:18]    #"00101001001000011"
         fts = str(int(DATA2,2)) + " fts" 
         zsint = DATA[7:9]
+        """
         if zsint == "00":
             print("No Vertical Rate (Level Flight)")
         elif zsint == "01":
@@ -65,7 +66,8 @@ def switch(LB,DATA):
         elif zsint == "10":
             print("Desending")
         else:
-            print("No data")        
+            print("No data")  
+            """   
         vaa=fts
 
     def Computed_Airspeed(): #206 
@@ -137,7 +139,35 @@ def switch(LB,DATA):
         DATAA1 = str(DATAA)+' Ft/Min'        
         #print(DATAA1)
         vaa=DATAA1        
-        
+
+    def Hour():
+        global vaa, dato
+        dato = "Hour Data: "
+#        DATA2 =  DATA[1:18]    #"00101001001000011"
+#        hr = str(int(DATA2,2))         
+        D1 = str(int(DATA[0:3],2))
+        D2 = str(int(DATA[3:7],2))
+        D3 = str(int(DATA[7:11],2))                
+        D4 = str(int(DATA[11:15],2))  
+        if SSM == "11":
+            DATAA = float("-"+D1+D2+D3+D4)
+        else:
+            DATAA = float(D1+D2+D3+D4)
+        DATAA1 = str(DATAA)+' s'        
+
+        vaa=DATAA1
+    
+    def Latitude():
+        global vaa, datos
+        dato = "Latitude: "
+        D1 = str(int(DATA[0:3],2))
+        D2 = str(int(DATA[3:7],2))
+        D3 = str(int(DATA[7:11],2))                
+        D4 = str(int(DATA[11:15],2))  
+        DATAA = float(D1+D2+D3+D4)   
+        DATA3 = DATAA
+        vaa=DATA3
+
 
     def default():
         global vaa, dato
@@ -146,17 +176,22 @@ def switch(LB,DATA):
         pass
 
     dict = {        
-        324 : Pitch_angle, #1616969940         OK
+        210 : True_Airspeed, #3758096520       OK -| USsAR ESTA
         325 : Roll_Angle, #3758670037          OK
+        324 : Pitch_angle, #1616969940         OK        
         203 : Altitude, #1611935875            OK
         206 : Computed_Airspeed, #1610612870   OK
-        210 : True_Airspeed, #3758096520       OK -| USsAR ESTA
-        #230 : True_Airspeed2, # OK             OK
         217 : Total_Pressure,  # OK ,217, 255,257, preguntar | USAR 217 por ahora
-        314 : Heading, # OK 320 - Probar ejemplos | %Magnetic % 14 y 320
+        320 : Heading, # OK 320 - Probar ejemplos | %Magnetic % 14 y 320
         104 : Vertical_speed, # OK - Probar, pues tiene las 2 formas de decodificación
+        125 : Hour, 
+        310 : Latitude,#230 : True_Airspeed2, # OK             OK
+        
+        
+        
+#       125 : Hora ## falta  -- posición 
+
+
     }
     dict.get(LB,default)()
-    
-
 

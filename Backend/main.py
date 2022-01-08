@@ -1,4 +1,4 @@
-import socketio
+#import socketio
 import arnic_dec
 import time
 
@@ -6,10 +6,10 @@ import time
 start_time = time.time()
 
 print("--- %s seconds ---" % (time.time() - start_time))
-arnic_dec.arn_dec('3758096520') #1753219080
+arnic_dec.arn_dec('1618776520') #1753219080
 
 # create a Socket.IO server
-sio = socketio.Server()
+#sio = socketio.Server()
 
 # wrap with a WSGI application
-app = socketio.WSGIApp(sio)
+#app = socketio.WSGIApp(sio)
