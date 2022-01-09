@@ -17,17 +17,21 @@ body {
   min-height: 100vh;
 }
 
-#empezar {
+.button {
+  border-radius: 5px;
+  border: none;
   background: #d0e7e4;
   color: rgb(110, 47, 47);
   font-family: calibri;
   display: block;
-  width: 70px;
   font-size: 16px;
   text-transform: uppercase;
-  padding: 10px;
+  padding: 15px 30px;
   text-align: center;
   margin: 10px auto;
   cursor: pointer;
- }
- 
+}
+.button:hover {
+  color: #d0e7e4;
+  background-color: rgb(110, 47, 47);
+}
