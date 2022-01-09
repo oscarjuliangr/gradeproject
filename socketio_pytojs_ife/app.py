@@ -8,8 +8,9 @@ from serial import Serial
 
 ser= serial.Serial('/dev/ttyUSB0',57600)
 p=[(324,'67')]
+sendData = true
 def serial_data_receive():
-    while  True:
+    while  sendData:
         global p
         f= ser.readline()
         data=f.decode("utf-8")
@@ -70,5 +71,9 @@ def sum(sid,data):
 @sio.event
 def communicate(sid):
     sio.emit('p_data',{'data is:',1}, to=sid)
+
+@sio.event
+def stop():
+    sendData= false
 
 

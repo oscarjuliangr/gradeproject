@@ -1,20 +1,3 @@
-const sio =io();
-sio.on('connect',()=>{
-    console.log('client connected');
-    sio.emit('sum', {numbers: [1,2]});
-});
-sio.on('disconnect',()=>{
-    console.log('disconnected');
-});
-
-sio.on('sum_res',(data)=>{
-    console.log('the result of the sum is ');
-    console.log(data);
-})
-
-var button= document.getElementById("empezar_envio");
-
-
 import {
   airspeed,
   altimeter,
@@ -24,37 +7,46 @@ import {
   variometer,
 } from './flightVars.js';
 
+const stopButton = document.getElementById('stop');
+const sio = io();
+sio.on('connect', () => {
+  console.log('client connected');
+  sio.emit('sum', { numbers: [1, 2] });
+});
+sio.on('disconnect', () => {
+  console.log('disconnected');
+});
 
-var increment = 0;
-var to_check=12;
-setInterval(function () {
-  // Airspeed update
-  airspeed.setAirSpeed(180); //0-160 knots label 210 Position 1
+sio.on('sum_res', ({ result }) => {
+  console.log(result);
+  updateData(result);
+});
 
-  // Attitude update
-  attitude.setRoll(30 * Math.sin(increment / 10)); // label 325 position 2
-  attitude.setPitch(50 * Math.sin(increment / 20)); // label 324 position 3
+const updateData = (data) => {
+  if (typeof data[0] === 'number') {
+    airspeed.setAirSpeed(data[0]);
+  }
+  if (typeof data[1] === 'number') {
+    attitude.setRoll(data[1]);
+    turn_coordinator.setTurn(data[1] * -1);
+  }
+  if (typeof data[2] === 'number') {
+    attitude.setPitch(data[2]);
+  }
+  if (typeof data[3] === 'number') {
+    altimeter.setAltitude(data[3]);
+  }
+  if (typeof data[4] === 'number') {
+    altimeter.setPressure(data[4]); // Revisar, sale de la escala y no se ve
+  }
+  if (typeof data[5] === 'number') {
+    heading.setHeading(data[5]);
+  }
+  if (typeof data[6] === 'number') {
+    variometer.setVario(data[6]);
+  }
+};
 
-  // Altimeter update
-  altimeter.setAltitude(10 * increment); // label 312 position 4
-  altimeter.setPressure(1000 + 3 * Math.sin(increment / 50)); // label 217 position 5
-
-  increment++;
-
-  // TC update - note that the TC appears opposite the angle of the attitude indicator, as it mirrors the actual wing up/down position
-  turn_coordinator.setTurn(30 * Math.sin(increment / 10) * -1);  // label 325 position 2
-
-
-  
-  // Heading update
-  heading.setHeading(to_check); // label 320 position 6
-  to_check=to_check+2;
-  // Vario update
-  variometer.setVario(0); // label 364 position 7
-  // label 125 position 8  this is universal time
-  // label  310 position  9 this is latitude
-  // label 311  position 10 this is Longitude
-
-
-
-}, 50); //muestrea cada milisegundo
+stopButton.addEventListener('click', () => {
+  sio.emit('stop');
+});

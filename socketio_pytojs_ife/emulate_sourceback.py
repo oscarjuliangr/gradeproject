@@ -30,18 +30,17 @@ app = socketio.WSGIApp(sio, static_files={
     '/img/vertical_mechanics.svg': {'filename':'./img/vertical_mechanics.svg','content_type': 'image/svg+xml'}  
 })        
 
-
+sendData = True
 def serial_data_receive():
     i=0
     global numpy_array
     global sio
-    while  True:
+    while  sendData:
         if i==len(numpy_array):
             i=0
         j=[numpy_array[i,0],numpy_array[i,1],numpy_array[i,2],numpy_array[i,3],numpy_array[i,4],numpy_array[i,5],numpy_array[i,6],numpy_array[i,7],numpy_array[i,8],numpy_array[i,9]]
         sio.emit('sum_res',{'result':j})
-        print(j)
-        time.sleep(2)
+        time.sleep(0.1)
         i=i+1
         
 
@@ -58,5 +57,10 @@ def connect(sid, environ):
 @sio.event
 def disconnect(sid):
     print(sid,'disconnected')
+@sio.event
+def stop(sid):
+    print(sid, 'stop')
+    global sendData 
+    sendData= False
 
 
