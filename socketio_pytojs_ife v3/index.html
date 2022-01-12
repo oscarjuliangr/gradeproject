@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shorcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="css/flightindicators.css" />
+    <title>T90</title>
+  </head>
+  <body>
+    <div class="caja">
+      <span id="tiempo">______</span>      
+    </div>
+    <div class="name_caja">
+      <span id="valor">Tiempo</span>      
+    </div>
+    <div class="caja">
+      <span id="latitude">______</span>      
+    </div>
+    <div class="name_caja">
+      <span id="valor">Latitude</span>      
+    </div>
+    <div class="caja">
+      <span id="longitude">______</span>      
+    </div>
+    <div class="name_caja"> 
+      <span id="valor">Longitude</span>      
+    </div>    
+    <div class="container">
+      <span id="airspeed"></span>
+      <span id="attitude"></span>
+      <span id="altimeter"></span>
+      <span id="turn_coordinator"></span>
+      <span id="heading"></span>
+      <span id="variometer"></span>
+    </div>
+    
+  <div>
+    <button id="stop" class="button">Detener</button>
+    <button id="start" class="button">Iniciar</button>
+  </div>
+
+
+    
+  </body>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+  <script src="js/jquery.flightindicators.js"></script>
+  <script type="module" src="js/script.js"></script>
+</html>

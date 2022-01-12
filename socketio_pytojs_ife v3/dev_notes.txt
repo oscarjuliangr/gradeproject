@@ -1,0 +1,4 @@
+hello there, please take in count:
+    - run the script within su
+    - execute the code with gunicorn -k eventlet -w 1 app:app
+    - please work with gunicorn v 20.0.4 ( NOT THE LATEST ONE PLS), and eventlet must be 0.30.3 (AGAIN, NOT THE LATEST)
